@@ -76,3 +76,16 @@ def user_login(request):
     else:
         return render(request, 'dappx/login.html', {})
 
+def update(request):
+    if request.method == 'POST':
+        instance = Profile.objects.get(user_id=request.user.id)
+        form = ProfileForm(request.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse('index'))
+
+    else:
+        form = ProfileForm()
+
+    return render(request, 'dappx/index.html', {'form': form})

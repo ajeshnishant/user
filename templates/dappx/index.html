@@ -1,13 +1,16 @@
 {% extends "dappx/base.html" %}
+{% load static %}
 {% block body_block %}
 <div class="container">
   <div class="jumbotron">
     <h1>Welcome !</h1>
     {% if user.is_authenticated %}
         <h2>Hello {{ user.username }}</h2>
-        <a href="http://127.0.0.1:8000/myapp/update/">UPDATE DETAILS</a>
-    {% else %}
-        <h2>Register or Login if you'd like to</h2>
+<form action="/update/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="update" value="Update">
+</form>
     {% endif %}
   </div>
 </div>
